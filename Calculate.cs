@@ -26,7 +26,7 @@ namespace Homework_10_5_1_2
         public void Plus (double x, double y)
         {
             _logger.Log(true);
-            Console.WriteLine($"{x}+{y}={x+y}");
+            Console.WriteLine($"{x} + {y} = {x + y:F3}");
         }
         
     }
