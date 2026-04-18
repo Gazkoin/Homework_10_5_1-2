@@ -1,28 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Homework_10_5_1_2
 {
-    
-    public interface CalcFunc
+    // ==================== ИНТЕРФЕЙСЫ ====================
+    public interface ICalculate
     {
-        void Plus (double x, double y);
-        void Log (bool k);
+        void Plus (double x, double y);   
     }
 
-    internal class Calculate
+    public interface ILoger
     {
+        void Log (bool isEvent); // isEvent = true - событие (синий), false - ошибка (красный)
+    }
+
+    // ==================== РЕАЛИЗАЦИИ ====================
+    internal class Calculate : ICalculate
+    {
+        private readonly ILoger _logger;   
+
+        public Calculate(ILoger logger)
+        {
+            _logger = logger;
+        }
+
         public void Plus (double x, double y)
         {
+            _logger.Log(true);
             Console.WriteLine($"{x}+{y}={x+y}");
         }
-        public void Log(bool k)
-        {
-            if (k) Console.ForegroundColor = ConsoleColor.Blue;
-            else Console.ForegroundColor = ConsoleColor.Red;
-        }
+        
     }
+
+    internal class Logger : ILoger
+    {
+        public void Log(bool isEvent)
+        {
+            Console.ForegroundColor = isEvent ? ConsoleColor.Blue : ConsoleColor.Red;
+        }
+
+    }
+
 }

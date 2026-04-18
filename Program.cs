@@ -6,14 +6,18 @@ namespace Homework_10_5_1_2
     {
         static void Main(string[] args)
         {
-            Calculate calculate = new Calculate();
+            ILoger logger = new Logger();
+            ICalculate calculate = new Calculate(logger);
+
             while (true)
             {
                 try
                 {
-                    calculate.Log(true);
+                    logger.Log(true);
+
                     Console.WriteLine("\nВведите х (0 для выхода):");
                     double x = double.Parse(Console.ReadLine().Trim());
+
                     if (x == 0) break;
 
                     Console.WriteLine("Введите y (0 для выхода):");
@@ -21,9 +25,9 @@ namespace Homework_10_5_1_2
 
                     calculate.Plus(x, y);
                 }
-                catch (Exception ex) { calculate.Log(false); Console.WriteLine($"[LOG] {DateTime.Now}: {ex.Message}"); } 
-            }                      
-            
+                catch (Exception ex) { logger.Log(false); Console.WriteLine($"[LOG] {DateTime.Now}: {ex.Message}"); }
+                finally { Console.ResetColor(); }
+            }
         }
     }
 }
